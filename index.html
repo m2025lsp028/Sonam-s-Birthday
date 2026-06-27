@@ -157,24 +157,6 @@
   .playbtn:hover { background-position: right center; transform: scale(1.05); }
   .playbtn:active { transform: scale(0.96); }
 
-  .songbtn {
-    margin-top: 12px;
-    background: linear-gradient(90deg, #b794f6, #ff6ec7 60%, #ffd166);
-    animation: none;
-  }
-
-  #songPlayer {
-    max-width: 100%;
-    margin: 16px auto 0;
-  }
-  #songPlayer iframe {
-    width: 100%;
-    height: 230px;
-    border: 0;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  }
-
   @keyframes pulse {
     0%, 100% { box-shadow: 0 8px 24px rgba(255, 110, 199, 0.35); }
     50% { box-shadow: 0 8px 34px rgba(122, 252, 255, 0.55); }
@@ -212,10 +194,7 @@
       <div class="typed" id="typed"></div>
     </div>
 
-    <button class="playbtn" id="playbtn" onclick="playBirthdaySong()">🎵 Tap to play birthday tune</button>
-
-    <button class="playbtn songbtn" id="songbtn" onclick="playSong()">🎶 Tap to play "Tum Jiyo Hazaron Saal" 🎬</button>
-    <div id="songPlayer"></div>
+    <button class="playbtn" id="playbtn" onclick="playBirthdaySong()">🎵 Tap to play birthday song 🎂</button>
 
     <div class="note" style="animation-delay:.1s">
       <h3>// presenting GRP's star: Sonam 🌟</h3>
@@ -261,61 +240,6 @@
       }
     }
     type();
-
-    // Play "Tum Jiyo Hazaron Saal" (Baar Baar Din Ye Aaye) inline with auto-fallback.
-    // Some uploads disable embedding, so we try a list until one plays.
-    var SONG_IDS = ['uB0hoM03dz8','iSMiXnLEByI','aJqGZ5qNuyU','0NUVOw054AI','H4ZOcbu6fBQ','Jn9_6yINCy4','6001yBdDD_k','FFYsaStVuJs'];
-    var ytPlayer, songIdx = 0, ytApiReady = false, pendingPlay = false;
-
-    (function loadYTApi() {
-      var s = document.createElement('script');
-      s.src = 'https://www.youtube.com/iframe_api';
-      document.head.appendChild(s);
-    })();
-    window.onYouTubeIframeAPIReady = function () {
-      ytApiReady = true;
-      if (pendingPlay) { pendingPlay = false; startPlayer(); }
-    };
-
-    function playSong() {
-      document.getElementById('songbtn').textContent = '🎶 Loading... Tum Jiyo Hazaron Saal';
-      if (!ytApiReady) { pendingPlay = true; return; }
-      startPlayer();
-    }
-
-    function startPlayer() {
-      songIdx = 0;
-      loadVideoAt();
-    }
-
-    function loadVideoAt() {
-      var c = document.getElementById('songPlayer');
-      c.innerHTML = '<div id="ytframe"></div>';
-      ytPlayer = new YT.Player('ytframe', {
-        videoId: SONG_IDS[songIdx],
-        playerVars: { autoplay: 1, rel: 0, playsinline: 1 },
-        events: {
-          onReady: function (e) {
-            e.target.playVideo();
-            document.getElementById('songbtn').textContent = '🎶 Now playing: Tum Jiyo Hazaron Saal 💛';
-          },
-          onError: function () { tryNextVideo(); }
-        }
-      });
-    }
-
-    function tryNextVideo() {
-      songIdx++;
-      if (songIdx < SONG_IDS.length) {
-        loadVideoAt();
-      } else {
-        var c = document.getElementById('songPlayer');
-        c.innerHTML = '<a class="playbtn songbtn" style="text-decoration:none;display:inline-block" ' +
-          'href="https://www.youtube.com/results?search_query=baar+baar+din+ye+aaye+rafi" ' +
-          'target="_blank" rel="noopener">▶ Open song on YouTube</a>';
-        document.getElementById('songbtn').textContent = '🎶 Tap to play "Tum Jiyo Hazaron Saal" 🎬';
-      }
-    }
 
     // Happy Birthday melody (public domain) via Web Audio API
     function playBirthdaySong() {
