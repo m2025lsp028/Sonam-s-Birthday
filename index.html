@@ -159,20 +159,18 @@
 
   .lyrics {
     text-align: center;
-    min-height: 28px;
-    margin: 14px auto 0;
-    font-size: 19px;
-    font-weight: 600;
+    min-height: 30px;
+    margin: 16px auto 0;
+    font-size: 21px;
+    font-weight: 700;
     line-height: 1.5;
-    background: linear-gradient(90deg, #ff6ec7, #ffd166 50%, #7afcff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #ffe08a;
+    text-shadow: 0 0 14px rgba(255, 110, 199, 0.6), 0 2px 6px rgba(0,0,0,0.4);
     opacity: 0;
-    transition: opacity 0.35s ease, transform 0.35s ease;
-    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(8px) scale(0.96);
   }
-  .lyrics.show { opacity: 1; transform: translateY(0); }
+  .lyrics.show { opacity: 1; transform: translateY(0) scale(1); }
 
   @keyframes pulse {
     0%, 100% { box-shadow: 0 8px 24px rgba(255, 110, 199, 0.35); }
@@ -309,7 +307,10 @@
       });
 
       // karaoke-style lyric display synced to the melody
-      lyrics.forEach(([text, startBeat]) => {
+      lyricEl.textContent = lyrics[0][0];
+      lyricEl.classList.add('show');
+      lyrics.forEach(([text, startBeat], idx) => {
+        if (idx === 0) return;
         setTimeout(() => {
           lyricEl.classList.remove('show');
           setTimeout(() => {
