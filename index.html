@@ -157,6 +157,13 @@
   .playbtn:hover { background-position: right center; transform: scale(1.05); }
   .playbtn:active { transform: scale(0.96); }
 
+  .songlink {
+    text-decoration: none;
+    margin-top: 12px;
+    background: linear-gradient(90deg, #b794f6, #ff6ec7 60%, #ffd166);
+    animation: none;
+  }
+
   @keyframes pulse {
     0%, 100% { box-shadow: 0 8px 24px rgba(255, 110, 199, 0.35); }
     50% { box-shadow: 0 8px 34px rgba(122, 252, 255, 0.55); }
@@ -194,7 +201,9 @@
       <div class="typed" id="typed"></div>
     </div>
 
-    <button class="playbtn" id="playbtn" onclick="playBirthdaySong()">🎵 Tap to play birthday song</button>
+    <button class="playbtn" id="playbtn" onclick="playBirthdaySong()">🎵 Tap to play birthday tune</button>
+
+    <a class="playbtn songlink" href="https://www.youtube.com/results?search_query=baar+baar+din+ye+aaye+tum+jiyo+hazaron+saal+rafi" target="_blank" rel="noopener">🎶 Play "Tum Jiyo Hazaron Saal" 🎬</a>
 
     <div class="note" style="animation-delay:.1s">
       <h3>// presenting GRP's star: Sonam 🌟</h3>
