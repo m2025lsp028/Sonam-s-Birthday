@@ -262,16 +262,59 @@
     }
     type();
 
-    // Play "Tum Jiyo Hazaron Saal" (Baar Baar Din Ye Aaye) inline via YouTube embed
+    // Play "Tum Jiyo Hazaron Saal" (Baar Baar Din Ye Aaye) inline with auto-fallback.
+    // Some uploads disable embedding, so we try a list until one plays.
+    var SONG_IDS = ['uB0hoM03dz8','iSMiXnLEByI','aJqGZ5qNuyU','0NUVOw054AI','H4ZOcbu6fBQ','Jn9_6yINCy4','6001yBdDD_k','FFYsaStVuJs'];
+    var ytPlayer, songIdx = 0, ytApiReady = false, pendingPlay = false;
+
+    (function loadYTApi() {
+      var s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(s);
+    })();
+    window.onYouTubeIframeAPIReady = function () {
+      ytApiReady = true;
+      if (pendingPlay) { pendingPlay = false; startPlayer(); }
+    };
+
     function playSong() {
-      const container = document.getElementById('songPlayer');
-      const btn = document.getElementById('songbtn');
-      container.innerHTML =
-        '<iframe src="https://www.youtube.com/embed/vKiFebpLemM?autoplay=1&rel=0&playsinline=1" ' +
-        'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen ' +
-        'title="Tum Jiyo Hazaron Saal"></iframe>';
-      btn.textContent = '🎶 Now playing: Tum Jiyo Hazaron Saal 💛';
-      btn.disabled = true;
+      document.getElementById('songbtn').textContent = '🎶 Loading... Tum Jiyo Hazaron Saal';
+      if (!ytApiReady) { pendingPlay = true; return; }
+      startPlayer();
+    }
+
+    function startPlayer() {
+      songIdx = 0;
+      loadVideoAt();
+    }
+
+    function loadVideoAt() {
+      var c = document.getElementById('songPlayer');
+      c.innerHTML = '<div id="ytframe"></div>';
+      ytPlayer = new YT.Player('ytframe', {
+        videoId: SONG_IDS[songIdx],
+        playerVars: { autoplay: 1, rel: 0, playsinline: 1 },
+        events: {
+          onReady: function (e) {
+            e.target.playVideo();
+            document.getElementById('songbtn').textContent = '🎶 Now playing: Tum Jiyo Hazaron Saal 💛';
+          },
+          onError: function () { tryNextVideo(); }
+        }
+      });
+    }
+
+    function tryNextVideo() {
+      songIdx++;
+      if (songIdx < SONG_IDS.length) {
+        loadVideoAt();
+      } else {
+        var c = document.getElementById('songPlayer');
+        c.innerHTML = '<a class="playbtn songbtn" style="text-decoration:none;display:inline-block" ' +
+          'href="https://www.youtube.com/results?search_query=baar+baar+din+ye+aaye+rafi" ' +
+          'target="_blank" rel="noopener">▶ Open song on YouTube</a>';
+        document.getElementById('songbtn').textContent = '🎶 Tap to play "Tum Jiyo Hazaron Saal" 🎬';
+      }
     }
 
     // Happy Birthday melody (public domain) via Web Audio API
