@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Birthday Sonam 🎂</title>
+<style>
+  :root {
+    --bg1: #1a1033;
+    --bg2: #2d1b4e;
+    --accent: #ff6ec7;
+    --accent2: #7afcff;
+    --card: rgba(255, 255, 255, 0.06);
+    --text: #f5f3ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    font-family: "Segoe UI", -apple-system, system-ui, sans-serif;
+    background: linear-gradient(160deg, var(--bg1), var(--bg2) 60%, #3a1d63);
+    color: var(--text);
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 30px 0 10px;
+  }
+
+  .cake {
+    font-size: 64px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  h1 {
+    font-size: 30px;
+    margin: 14px 0 6px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+
+  .sub {
+    font-size: 14px;
+    opacity: 0.8;
+    font-family: "Courier New", monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .typed {
+    min-height: 22px;
+    color: var(--accent2);
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  .cursor { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .note {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 20px 22px;
+    margin: 18px 0;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    animation: rise 0.6s ease both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .note h3 {
+    font-size: 15px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-family: "Courier New", monospace;
+  }
+
+  .note p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .code {
+    font-family: "Courier New", monospace;
+    background: rgba(0,0,0,0.3);
+    border-left: 3px solid var(--accent2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #c8f7c5;
+    margin: 18px 0;
+    white-space: pre-wrap;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 13px;
+    opacity: 0.7;
+    line-height: 1.7;
+  }
+
+  .heart { color: var(--accent); }
+
+  .tip {
+    text-align:center;
+    font-size: 12px;
+    opacity: 0.55;
+    margin-top: 22px;
+    font-style: italic;
+  }
+
+  /* confetti */
+  .confetti {
+    position: fixed;
+    top: -10px;
+    width: 9px;
+    height: 9px;
+    opacity: 0.9;
+    z-index: 1;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(720deg); }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="cake">🎂</div>
+      <h1>Happy Birthday,<br/>Sonam! 🎉</h1>
+      <div class="sub">// from your friend 💛</div>
+      <div class="typed" id="typed"></div>
+    </div>
+
+    <div class="code">$ git commit -m "Sonam +1 year of awesome"
+✔ Compiled successfully with 0 errors
+✨ Wishing you a year full of green builds 💚</div>
+
+    <div class="note" style="animation-delay:.1s">
+      <h3>// to my favorite person</h3>
+      <p>Some friends are like clean, well-written code — rare, reliable, and they make everything around them better. That's you, Sonam. So lucky to have a friend like you in my life. 💖</p>
+    </div>
+
+    <div class="note" style="animation-delay:.25s">
+      <h3>// my wish for you</h3>
+      <p>May this year bring you bug-free days, dreams that finally get deployed, endless laughter, and every single thing your heart wants. You deserve all of it and more. 🚀</p>
+    </div>
+
+    <div class="note" style="animation-delay:.4s">
+      <h3>// thank you</h3>
+      <p>Thank you for the chai breaks, the random rants, the inside jokes, and for always being there. Life's just more fun with you around. Here's to many more memories together! ✨</p>
+    </div>
+
+    <div class="footer">
+      Made with a lot of <span class="heart">♥</span> and a little bit of code,<br/>
+      just for you. <br/><br/>
+      <strong>Have the happiest birthday, Sonam! 🥳</strong>
+    </div>
+
+    <div class="tip">📸 Tip: take a screenshot to keep this forever</div>
+  </div>
+
+  <script>
+    // typewriter line
+    const lines = [
+      "console.log('You are amazing 💫');",
+      "while(alive) { beHappy(); }",
+      "return bestBirthdayEver;"
+    ];
+    let li = 0, ci = 0;
+    const el = document.getElementById('typed');
+    function type() {
+      const line = lines[li];
+      el.innerHTML = line.slice(0, ci) + '<span class="cursor">▌</span>';
+      ci++;
+      if (ci > line.length) {
+        setTimeout(() => { ci = 0; li = (li + 1) % lines.length; type(); }, 1600);
+      } else {
+        setTimeout(type, 60);
+      }
+    }
+    type();
+
+    // confetti
+    const colors = ['#ff6ec7', '#7afcff', '#ffd166', '#c8f7c5', '#b794f6'];
+    for (let i = 0; i < 40; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (3 + Math.random() * 4) + 's';
+      c.style.animationDelay = (Math.random() * 5) + 's';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(c);
+    }
+  </script>
+</body>
+</html>
