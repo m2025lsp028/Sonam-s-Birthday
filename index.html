@@ -157,6 +157,23 @@
   .playbtn:hover { background-position: right center; transform: scale(1.05); }
   .playbtn:active { transform: scale(0.96); }
 
+  .lyrics {
+    text-align: center;
+    min-height: 28px;
+    margin: 14px auto 0;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.5;
+    background: linear-gradient(90deg, #ff6ec7, #ffd166 50%, #7afcff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    transform: translateY(8px);
+  }
+  .lyrics.show { opacity: 1; transform: translateY(0); }
+
   @keyframes pulse {
     0%, 100% { box-shadow: 0 8px 24px rgba(255, 110, 199, 0.35); }
     50% { box-shadow: 0 8px 34px rgba(122, 252, 255, 0.55); }
@@ -195,6 +212,7 @@
     </div>
 
     <button class="playbtn" id="playbtn" onclick="playBirthdaySong()">🎵 Tap to play birthday song 🎂</button>
+    <div id="lyrics" class="lyrics"></div>
 
     <div class="note" style="animation-delay:.1s">
       <h3>// presenting GRP's star: Sonam 🌟</h3>
@@ -241,9 +259,11 @@
     }
     type();
 
-    // Happy Birthday melody (public domain) via Web Audio API
+    // "Baar Baar Din Ye Aaye / Tum Jiyo Hazaron Saal" — its mukhda is set to the
+    // (public-domain) Happy Birthday melody, played here with pure tones. No ads, audio only.
     function playBirthdaySong() {
       const btn = document.getElementById('playbtn');
+      const lyricEl = document.getElementById('lyrics');
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       const ctx = new AudioCtx();
 
@@ -252,8 +272,8 @@
         G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25,
         D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99
       };
-      // [frequency, beats]
-      const beat = 0.42;
+      // [note, beats]
+      const beat = 0.5;
       const song = [
         ['G4', .75], ['G4', .25], ['A4', 1], ['G4', 1], ['C5', 1], ['B4', 2],
         ['G4', .75], ['G4', .25], ['A4', 1], ['G4', 1], ['D5', 1], ['C5', 2],
@@ -261,7 +281,16 @@
         ['F5', .75], ['F5', .25], ['E5', 1], ['C5', 1], ['D5', 1], ['C5', 2]
       ];
 
-      let t = ctx.currentTime + 0.1;
+      // lyric lines aligned to the melody phrases [text, startBeat]
+      const lyrics = [
+        ['Baar baar din ye aaye 🎉', 0],
+        ['Baar baar dil ye gaaye 💛', 6],
+        ['Tum jiyo hazaaron saal ✨', 12],
+        ['Ye meri hai aarzoo 🎂', 19],
+        ['Happy Birthday, Sonam! 🥳', 25]
+      ];
+
+      let t = ctx.currentTime + 0.15;
       song.forEach(([note, len]) => {
         const dur = len * beat;
         const osc = ctx.createOscillator();
@@ -279,7 +308,18 @@
         t += dur;
       });
 
-      btn.textContent = '🎶 Playing... Happy Birthday Sonam!';
+      // karaoke-style lyric display synced to the melody
+      lyrics.forEach(([text, startBeat]) => {
+        setTimeout(() => {
+          lyricEl.classList.remove('show');
+          setTimeout(() => {
+            lyricEl.textContent = text;
+            lyricEl.classList.add('show');
+          }, 180);
+        }, 150 + startBeat * beat * 1000);
+      });
+
+      btn.textContent = '🎶 Playing... Tum Jiyo Hazaaron Saal 💛';
       btn.disabled = true;
       const totalMs = (t - ctx.currentTime) * 1000 + 200;
       setTimeout(() => {
