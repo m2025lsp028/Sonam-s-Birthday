@@ -172,6 +172,12 @@
   }
   .lyrics.show { opacity: 1; transform: translateY(0) scale(1); }
 
+  .savebtn {
+    background: linear-gradient(90deg, #7afcff, #b794f6 50%, #ffd166);
+    animation: none;
+    margin-top: 8px;
+  }
+
   @keyframes pulse {
     0%, 100% { box-shadow: 0 8px 24px rgba(255, 110, 199, 0.35); }
     50% { box-shadow: 0 8px 34px rgba(122, 252, 255, 0.55); }
@@ -233,7 +239,9 @@
       <strong>Have the happiest birthday, Sonam! 🥳</strong>
     </div>
 
-    <div class="tip">📸 Tip: take a screenshot to keep this forever</div>
+    <button class="playbtn savebtn" onclick="downloadPage()">💾 Save this page to keep forever</button>
+
+    <div class="tip">📸 Tip: tap "Save" above, or take a screenshot 💛</div>
   </div>
 
   <script>
@@ -256,6 +264,27 @@
       }
     }
     type();
+
+    // Download this page so it can be saved & opened offline anytime
+    function downloadPage() {
+      function triggerDownload(text) {
+        var blob = new Blob([text], { type: 'text/html' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'Happy-Birthday-Sonam.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+      }
+      fetch(window.location.href)
+        .then(function (r) { return r.text(); })
+        .then(function (t) { triggerDownload(t); })
+        .catch(function () {
+          triggerDownload('<!DOCTYPE html>\n' + document.documentElement.outerHTML);
+        });
+    }
 
     // "Baar Baar Din Ye Aaye / Tum Jiyo Hazaron Saal" — its mukhda is set to the
     // (public-domain) Happy Birthday melody, played here with pure tones. No ads, audio only.
